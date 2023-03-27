@@ -16,7 +16,7 @@
 #include <openssl/sha.h>
 #include <openssl/evp.h>
 
-#define AES_KEY_SIZE 128
+#define AES_KEY_SIZE 1024
 
 // Each array element is a 128 bit int vector
 static __m128i key_schedule[20];
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
     unsigned char curkey[AES_KEY_SIZE];
     std::array<uint8_t, AES_KEY_SIZE> ciphertext;
 
-    uint keyword_list_size = uint(pow(2,26));
+    uint keyword_list_size = uint(pow(2,23));
     // uint keyword_list_size = 134217728;
     
     startTimer(1);
