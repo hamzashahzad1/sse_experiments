@@ -131,7 +131,7 @@ int main(int argc, char** argv)
     std::array<uint8_t, AES_KEY_SIZE> ciphertext;
 
     // uint keyword_list_size = uint(pow(2,23));
-    uint keyword_list_size = 128;
+    uint keyword_list_size = 1024;
     
     startTimer(1);
     for(uint i = 0; i < keyword_list_size; i++){
