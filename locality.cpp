@@ -88,7 +88,7 @@ myTime worst_locality(uint64_t keyword_list_size){
 
     for(uint64_t i = 1; i <= keyword_list_size; i++){
         startTimer(i);
-        system("sudo hdparm -A 0 /dev/sda");
+        // system("sudo hdparm -A 0 /dev/sda");
         system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
         auto cache_time = stopTimer(i);
         totalCacheTime += cache_time;
@@ -117,12 +117,12 @@ myTime worst_locality(uint64_t keyword_list_size){
     return time_variable;
 }
 
-myTime logN_locality(uint64_t keyword_list_size, uint logN_value){
+myTime custom_locality(uint64_t keyword_list_size, uint logN_value){
     FILE* file;
     file = fopen("myfile.dat", "rb");
-    char chainHead[128];
+    char chainHead[KEYWORD_SIZE*10];
 
-    uint64_t per_block = keyword_list_size/27;
+    uint64_t per_block = keyword_list_size/logN_value;
     uint64_t remaining_words = keyword_list_size;
 
     srand(time(NULL));
@@ -134,7 +134,7 @@ myTime logN_locality(uint64_t keyword_list_size, uint logN_value){
 
     for(uint i = 1; i <= logN_value; i++){
         startTimer(i);
-        system("sudo hdparm -A 0 /dev/sda");
+        // system("sudo hdparm -A 0 /dev/sda");
         system("echo 3 | sudo tee /proc/sys/vm/drop_caches");
         auto cache_time = stopTimer(i);
         totalCacheTime += cache_time;
@@ -167,10 +167,10 @@ myTime logN_locality(uint64_t keyword_list_size, uint logN_value){
 }
 
 int main(int argc, char** argv){
-    myTime time_variable ;
-    // time_variable = best_locality(134217728);
-    // time_variable = logN_locality(134217728,27);
-    time_variable = worst_locality(1048576);
+    myTime time_variable;
+    // time_variable = best_locality(512);
+    // time_variable = custom_locality(134217728,log2(134217728));
+    time_variable = worst_locality(65536);
     std::cout << "Total access time: " << time_variable.total_access_time << std::endl;
 }
 

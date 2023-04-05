@@ -16,7 +16,7 @@
 #include <openssl/sha.h>
 #include <openssl/evp.h>
 
-#define AES_KEY_SIZE 1024
+#define AES_KEY_SIZE 16384
 
 // Each array element is a 128 bit int vector
 static __m128i key_schedule[20];
@@ -121,17 +121,19 @@ void aes128_load_key(int8_t *enc_key){
 // TO RUN THE PROGRAM: g++ encryption.cpp -std=c++17 -march=native -o encryption
 int main(int argc, char** argv)
 {
+    
     std::string key_id_128 = "";
-    for(uint8_t i = 0; i < AES_KEY_SIZE; i++){
-        key_id_128.push_back(char(i));
+   
+    for(uint i = 0; i < AES_KEY_SIZE; i++){
+        key_id_128.push_back(char(i%256));
     }
-
     std::array<uint8_t, AES_KEY_SIZE> plaintext;
     unsigned char curkey[AES_KEY_SIZE];
     std::array<uint8_t, AES_KEY_SIZE> ciphertext;
 
-    uint keyword_list_size = uint(pow(2,23));
+    uint keyword_list_size = uint(pow(2,29));
     // uint keyword_list_size = 134217728;
+    
     
     startTimer(1);
     for(uint i = 0; i < keyword_list_size; i++){
