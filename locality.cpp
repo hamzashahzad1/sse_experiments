@@ -44,7 +44,7 @@ myTime best_locality(uint64_t keyword_list_size){
     uint64_t total_data_size = keyword_list_size*KEYWORD_SIZE;
 
    
-    char chainHead[128];
+    char chainHead[KEYWORD_SIZE*10];
 
     myTime time_variable;
     
@@ -62,7 +62,6 @@ myTime best_locality(uint64_t keyword_list_size){
 
     startTimer(3);
     for(uint64_t i = 0; i < total_data_size; i+= KEYWORD_SIZE){
-        char chainHead[32];
         fread(chainHead, KEYWORD_SIZE, 1, file);
     }
     time_variable.read_time = stopTimer(3);
@@ -77,7 +76,7 @@ myTime best_locality(uint64_t keyword_list_size){
 myTime worst_locality(uint64_t keyword_list_size){
     FILE* file;
     file = fopen("myfile.dat", "rb");
-    char chainHead[128];
+    char chainHead[KEYWORD_SIZE*10];
 
     srand(time(NULL));
 
